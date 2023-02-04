@@ -1,6 +1,6 @@
 (in-package :cl-repl)
 
-(defconstant +version+ '0.6.4)
+(defconstant +version+ "0.7.0")
 
 (defvar *logo*
   "  ___  __          ____  ____  ____  __
@@ -9,19 +9,13 @@
  \\___)\\____/      (__\\_)(____)(__)  \\____/
 ")
 
-(defvar *copy* "(C) 2017-2018 TANI Kojiro <kojiro0531@gmail.com>")
+(defvar *copy* "(C) 2017-2018 TANI Kojiro <kojiro0531@gmail.com>, 2023 Ryan Gannon <ryanmgannon@gmail.com>")
+
+(defvar *show-logo* t)
 
 (defvar *versions*
-  (format nil "cl-repl ~a on ~?~a ~a"
+  (format nil "cl-repl ~a on ~a ~a" 
           +version+
-          #+ros.script
-          "Roswell ~a, "
-          #-ros.script
-          ""
-          #+ros.script
-          `(,(ros::version))
-          #-ros.script
-          nil
           (lisp-implementation-type)
           (lisp-implementation-version)))
 
@@ -61,32 +55,33 @@
   (rl:register-function :complete #'completer)
   (install-inspector))
 
-(defun main (&optional argv &key (show-logo t))
-  (multiple-value-bind (options free-args)
+(defun main ()
+  (let ((argv (uiop:command-line-arguments)))
+    (multiple-value-bind (options free-args)
       (handler-case
-          (if argv (opts:get-opts argv) (opts:get-opts))
+        (if argv (opts:get-opts argv) (opts:get-opts))
         (error ()
-          (format t "try `cl-repl --help`.~&")
-          (uiop:quit 1)))
-    (when-option (options :help)
-      (opts:describe
-       :prefix "A full-featured Common Lisp REPL implementation.")
-      (uiop:quit 0))
-    (when-option (options :version)
-      (format t "cl-repl v~a~&" +version+)
-      (uiop:quit 0))
-    (when-option (options :no-init)
-      (setf *site-init-path* nil)))
-  (site-init)
-  (when *repl-flush-screen* (flush-screen))
-  (with-cursor-hidden
-    (when show-logo
-      (format t (color *logo-color* *logo*)))
-    (format t "~a~%~a~2%" *versions* *copy*))
-  (in-package :cl-user)
-  (unwind-protect
-    (conium:call-with-debugger-hook #'debugger #'repl)
-    (rl:deprep-terminal))
-  (when *repl-flush-screen* (flush-screen)))
+               (format t "try `cl-repl --help`.~&")
+               (uiop:quit 1)))
+      (when-option (options :help)
+                   (opts:describe
+                     :prefix "A full-featured Common Lisp REPL implementation.")
+                   (uiop:quit 0))
+      (when-option (options :version)
+                   (format t "cl-repl v~a~&" +version+)
+                   (uiop:quit 0))
+      (when-option (options :no-init)
+                   (setf *site-init-path* nil)))
+    (site-init)
+    (when *repl-flush-screen* (flush-screen))
+    (with-cursor-hidden
+      (when *show-logo*
+        (format t (color *logo-color* *logo*)))
+      (format t "~a~%~a~2%" *versions* *copy*))
+    (in-package :cl-user)
+    (unwind-protect
+      (conium:call-with-debugger-hook #'debugger #'repl)
+      (rl:deprep-terminal))
+    (when *repl-flush-screen* (flush-screen))))
 
 

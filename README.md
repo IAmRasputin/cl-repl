@@ -24,11 +24,8 @@ What this project tries to achieve are listed here.
 Screenshots can be found [here](./image/).
 
 # Installation
-We recommend to use roswell.  
-CL-REPL can be installed via roswell as follows.
-
 ```
-$ ros install koji-kojiro/cl-repl
+$ make
 ```
 
 Before installation, please ensure that gnu readline is installed.  
@@ -41,19 +38,9 @@ $ brew link --force readline
 Also, ensure that your terminal support 256 colors.
 
 
-## Note about installation via Roswell
-If you installed roswell with normal configurations, cl-repl will be located in `~/.roswell/bin`.  
-To use cl-repl from the command line, please ensure the PATH variable includes `~/.roswell/bin`.
-
 # Usage
 ```
 $　cl-repl
-```
-
-or
-
-```
-$ ros repl
 ```
 
 Some useful magic commands are ready to use. To list available commands:

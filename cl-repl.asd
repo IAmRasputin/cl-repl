@@ -1,13 +1,17 @@
-(defsystem cl-repl
-  :version "0.6.4"
+(asdf:defsystem "cl-repl"
+  :version "0.7.0"
   :author "TANI Kojiro"
+  :maintainer "IAmRasputin <ryanmgannon@gmail.com>"
   :license "GPLv3"
-  :depends-on (#:uiop
-               #:unix-opts
-               #:conium
-               #:cl-ppcre
-               #:cl-readline)
+  :depends-on (:uiop
+               :unix-opts
+               :conium
+               :cl-ppcre
+               :cl-readline)
   :serial t
+  :build-operation "program-op"
+  :build-pathname "cl-repl"
+  :entry-point "cl-repl:main"
   :components ((:module "src" :components ((:file "package")
                                            (:file "util")
                                            (:file "color")
