@@ -1,6 +1,6 @@
 (in-package :cl-repl)
 
-(defconstant +version+ "0.7.0")
+(defvar *version* (asdf:component-version (asdf:find-system :cl-repl)))
 
 (defvar *logo*
   "  ___  __          ____  ____  ____  __
@@ -15,7 +15,7 @@
 
 (defvar *versions*
   (format nil "cl-repl ~a on ~a ~a" 
-          +version+
+          *version*
           (lisp-implementation-type)
           (lisp-implementation-version)))
 
@@ -68,7 +68,7 @@
                      :prefix "A full-featured Common Lisp REPL implementation.")
                    (uiop:quit 0))
       (when-option (options :version)
-                   (format t "cl-repl v~a~&" +version+)
+                   (format t "cl-repl v~a~&" *version*)
                    (uiop:quit 0))
       (when-option (options :no-init)
                    (setf *site-init-path* nil)))
@@ -78,7 +78,7 @@
       (when *show-logo*
         (format t (color *logo-color* *logo*)))
       (format t "~a~%~a~2%" *versions* *copy*))
-    (in-package :cl-user)
+   ;; (in-package :cl-user)
     (unwind-protect
       (conium:call-with-debugger-hook #'debugger #'repl)
       (rl:deprep-terminal))
