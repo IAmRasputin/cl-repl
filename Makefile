@@ -1,4 +1,5 @@
 LISP ?= sbcl
+ASD := ./cl-repl.asd
 
 all: clean build
 
@@ -12,6 +13,6 @@ build:
 		--no-userinit \
 		--eval '(require "asdf")' \
 		--load load-quicklisp.lisp \
-		--eval '(asdf:load-asd "cl-repl.asd")' \
+		--eval '(asdf:load-asd "$(ASD)")' \
 		--eval '(asdf:load-system "cl-repl")' \
 		--eval '(asdf:make :cl-repl)'
