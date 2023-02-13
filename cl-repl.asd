@@ -9,7 +9,8 @@
                :cl-ppcre
                :cl-readline)
   :serial t
-  :build-operation "program-op"
+  :defsystem-depends-on (:deploy)
+  :build-operation "deploy-op"
   :build-pathname "cl-repl"
   :entry-point "cl-repl:main"
   :components ((:module "src" :components ((:file "package")
