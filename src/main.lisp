@@ -85,7 +85,7 @@
       (format t "~a~%~a~2%" *versions* *copy*))
     (in-package :repl-user)
     (unwind-protect
-         (repl)
+         (conium:call-with-debugger-hook nil #'repl)
       (rl:deprep-terminal))
     (when *repl-flush-screen* (flush-screen))))
 
