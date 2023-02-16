@@ -50,10 +50,7 @@
    :short #\n
    :long "no-init"))
 
-(progn
-  (enable-syntax)
-  (rl:register-function :complete #'completer)
-  (install-inspector))
+
 
 (defun main ()
   (let ((argv (uiop:command-line-arguments)))
@@ -63,7 +60,14 @@
         (error ()
                (format t "try `cl-repl --help`.~&")
                (uiop:quit 1)))
+
       (declare (ignore free-args))
+
+      (enable-syntax)
+      (rl:register-function :complete #'completer)
+      (install-inspector)
+      (setf (uiop:getenv "DEPLOY_DEBUG_BOOT") "true")
+
       (when-option (options :help)
                    (opts:describe
                      :prefix "A full-featured Common Lisp REPL implementation.")
@@ -79,9 +83,9 @@
       (when *show-logo*
         (format t (color *logo-color* *logo*)))
       (format t "~a~%~a~2%" *versions* *copy*))
-   ;; (in-package :cl-user)
+    (in-package :repl-user)
     (unwind-protect
-      (conium:call-with-debugger-hook #'debugger #'repl)
+         (repl)
       (rl:deprep-terminal))
     (when *repl-flush-screen* (flush-screen))))
 
