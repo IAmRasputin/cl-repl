@@ -27,10 +27,10 @@ the following features:
 # See it in action:
 
 ## Syntax hilighting!
-![cl-repl syntax](images/syntax-highlight.png)
+![cl-repl syntax](image/syntax-highlight.png)
 
 ## Auto-Completion!
-![cl-repl Auto-Completion](images/completion.png)
+![cl-repl Auto-Completion](image/completion.png)
 
 # Installation
 ```
