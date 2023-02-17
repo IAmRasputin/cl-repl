@@ -1,96 +1,107 @@
-# CL-REPL
-[![Build Status](https://travis-ci.org/koji-kojiro/cl-repl.svg?branch=master)](https://travis-ci.org/koji-kojiro/cl-repl)
-[![License](http://img.shields.io/badge/license-GPLv3-blue.svg?style=flat)](https://github.com/koji-kojiro/cl-repl/blob/master/LICENSE)
-[![GitHub tag](https://img.shields.io/github/tag/koji-kojiro/cl-repl.svg?style=flat)](https://github.com/koji-kojiro/cl-repl/releases)
-[![Quicklisp dist](http://quickdocs.org/badge/cl-repl.svg)](http://quickdocs.org/cl-repl/)
+# cl-repl
+[![license](http://img.shields.io/badge/license-gplv3-blue.svg?style=flat)](https://github.com/iamrasputin/cl-repl/blob/master/license)
+[![github tag](https://img.shields.io/github/tag/iamrasputin/cl-repl.svg?style=flat)](https://github.com//cl-repl/releases)
+[![quicklisp dist](http://quickdocs.org/badge/cl-repl.svg)](http://quickdocs.org/cl-repl/)
 
-# **Warning; WIP**
-The software is still alpha quality.  
-The functionalities are incomplete and may cause unkown bugs.
+## Note
+
+Much like the repository from which this one is forked, `cl-repl` is a work-in-progress.  Unexpected bugs,
+missing features, and [nasal demons](http://catb.org/jargon/html/N/nasal-demons.html) are to be expected.  Please report any you find as an issue, and I'll do
+my best to provide support.
 
 # Overview
-This project aims to provide a beginner-friendly REPL for Common Lisp with rich functionalities, such as IPython for Python.
+`cl-repl` aims to provide a beginner-friendly REPL for Common Lisp with batteries included, like `ipython` for python.
 
-What this project tries to achieve are listed here.
+While SBCL is a powerful implementation of Common Lisp, with its own neat features and provided programming environment,
+its top-level REPL leaves much to be desired.  `cl-repl` is thus a feature-stuffed wrapper around SBCL, with (some of)
+the following features:
 
-- [x] powerful line editting with gnu readline.
+- [x] powerful line editting with GNU readline.
 - [x] tab-completion of symbols.
 - [x] simple installation instruction.
 - [x] code editting with text editor.
-- [ ] useful debugger & inspector. (incomplete)
+- [ ] useful debugger & inspector
 - [x] syntax highlighting of input texts.
-- [ ] implementation independence. (only SBCL supported)
+- [ ] implementation independence. (only sbcl supported)
 
-Screenshots can be found [here](./image/).
+# See it in action:
+
+## Syntax hilighting!
+![cl-repl syntax](images/syntax-highlight.png)
+
+## Auto-Completion!
+![cl-repl Auto-Completion](images/completion.png)
 
 # Installation
 ```
 $ make
 ```
+`make` will deploy an executable _as well as_ any required libraries to the `bin` folder at the root of the project.
 
-Before installation, please ensure that gnu readline is installed.  
-If you use OSX, you might need to execute following command.
+before installation, please ensure that GNU readline is installed.  
+
+If you run MacOS, you may need to execute following command:
 
 ```
 $ brew link --force readline
 ```
 
-Also, ensure that your terminal support 256 colors.
+Also, *ensure that your terminal support 256 colors*.
 
 
 # Usage
 ```
-$　cl-repl
+$　./bin/cl-repl 
 ```
 
-Some useful magic commands are ready to use. To list available commands:
+Some useful "magic" commands are ready to use out of the box. To see a list of available commands:
 
 ```
-CL-USER> %help
+repl-user> %help
 ```
 
 ## Configuration
-You can customize CL-REPL by editting `~/.replrc`. You can change appearance, add your own commands, and do anything you want when startup.  
+You can customize cl-repl by editing `~/.replrc`. you can change appearance, add your own commands, and do anything you want when startup; the file can
+contain any legal Common Lisp code, which will be evaluated when you start your REPL.
+
 An example can be found [here](./replrc-example).
 
-## Syntax highlighting
-Syntax highlighiting of input area is new in v0.5.0.
-If you want to disable it, put the following in your `.replrc`.
-
-```
-(disable-syntax)
-```
-
-## execute shell
-If the line starts with `!`, excute it as shell command, e.g. `!ls -a`.
+## Execute shell command
+If the line starts with `!`, `cl-repl` will excute it as shell command, e.g. `!ls -a`.
 
 ## %edit magic
-Line editting in repl is sometimes painful. CL-REPL allows yot to edit code with your favorite text editor. 
 
+REPLs are cool, but sometimes you need a text editor.  Luckily, `cl-repl` ships with a magic command
+to open one:
 ```
-CL-REPL> %edit <filename>
+repl-user> %edit <filename>
 ```
 
-CL-REPL invokes a text editor specified by `$EDITOR`.  
-After editting code, save and close it. Then repl will start to evaluate it.  
-If `<filename>` is not supplied, a temporary file will be created and deleted after evaluation.  
+This will cause `cl-repl` to invoke the editor specified by `$EDITOR` at your shell.  
+After editing code save it and close your editor; `cl-repl` will automatically evaluate it.  
 
-We've be sure the following editors work properly.  
+If a `<filename>` argument is not supplied, a temporary file will be created and deleted after evaluation.  
 
-- vi & vim
-- GNU Emacs
-- joe's own editor
-- Lem
+The following editors are known to work properly:
+
+- vi/vim/neovim
+- GNU emacs
+- Joe's Own Editor
+- lem
 
 # Contributing
-Don't hesitate to open issues or to send PRs.  
-Any suggestions are always welcomed.
+I probably can't write this all myself; if you have a cool idea for a feature, or see a bug
+you want fixed, please open a pull request!
 
 # Author
-[TANI Kojiro](https://github.com/koji-kojiro) (kojiro0531@gmail.com)
+[Tani Kojiro](https://github.com/koji-kojiro) (kojiro0531@gmail.com) is the author of the original repository, which hasn't had a new commit
+since 2020.
+
+I (IAmRasputin) have taken this up to maintain, as I feel it's useful, but it's probably a stretch to call me an author.
+
 
 # License
-CL-REPL is distributed under [GPLv3](./LICENSE).
+`cl-repl` is distributed under the [3rd Revision of the GNU General Public License](./LICENSE).
 
 
 
